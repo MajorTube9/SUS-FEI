@@ -7,10 +7,21 @@ typedef struct {
     char cpf[12];
 } Paciente;
 
-void cadastrar_paciente();
-void consultar_paciente();
-void listar_pacientes();
-void atualizar_paciente();
-void remover_paciente();
+typedef struct Elista {
+    Paciente dados;
+    struct Elista *proximo;
+} Elista;
+
+typedef struct {
+    Elista *inicio;
+    int qtde;
+} Lista;
+
+void inicializar_lista(Lista *lista);
+void cadastrar_paciente(Lista *lista);
+void consultar_paciente(Lista *lista);
+void listar_pacientes(Lista *lista);
+void atualizar_paciente(Lista *lista);
+void remover_paciente(Lista *lista);
 
 #endif
