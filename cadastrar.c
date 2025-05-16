@@ -1,4 +1,4 @@
-#include "biblioteca.h"
+#include "cadastrar.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +24,12 @@ void cadastrar_paciente(Lista *lista) {
     scanf("%d", &novo->dados.idade);
     printf("Digite o CPF do paciente: ");
     scanf(" %[^\n]", novo->dados.cpf);
+    printf("Digite o dia da entrada: ");
+    scanf(" %d", &novo->dados.entrada.dia);
+    printf("Digite o mes da entrada: ");
+    scanf(" %d", &novo->dados.entrada.mes);
+    printf("Digite o ano da entrada: ");
+    scanf(" %d", &novo->dados.entrada.ano);
 
     // Inserção no início da lista
     novo->proximo = lista->inicio;
@@ -51,6 +57,9 @@ void consultar_paciente(Lista *lista) {
             printf("Nome: %s\n", atual->dados.nome);
             printf("Idade: %d\n", atual->dados.idade);
             printf("CPF: %s\n", atual->dados.cpf);
+            printf("Entrada: %d/%d/%d", atual->dados.entrada.dia,
+                                            atual->dados.entrada.mes,
+                                            atual->dados.entrada.ano);
             return;
         }
         atual = atual->proximo;
@@ -69,7 +78,10 @@ void listar_pacientes(Lista *lista) {
     printf("\nLista de pacientes cadastrados:\n");
     Elista *atual = lista->inicio;
     while (atual != NULL) {
-        printf("Nome: %s, Idade: %d, CPF: %s\n", atual->dados.nome, atual->dados.idade, atual->dados.cpf);
+        printf("Nome: %s, Idade: %d, CPF: %s, ", atual->dados.nome, atual->dados.idade, atual->dados.cpf);
+        printf("Entrada: %d/%d/%d\n", atual->dados.entrada.dia,
+                                            atual->dados.entrada.mes,
+                                            atual->dados.entrada.ano);
         atual = atual->proximo;
     }
 }
@@ -95,6 +107,13 @@ void atualizar_paciente(Lista *lista) {
             scanf("%d", &atual->dados.idade);
             printf("Digite o novo CPF: ");
             scanf(" %[^\n]", atual->dados.cpf);
+            printf("Digite o novo dia da entrada: ");
+            scanf(" %d", &atual->dados.entrada.dia);
+            printf("Digite o novo mes da entrada: ");
+            scanf(" %d", &atual->dados.entrada.mes);
+            printf("Digite o novo ano da entrada: ");
+            scanf(" %d", &atual->dados.entrada.ano);
+
             printf("Dados do paciente atualizados com sucesso!\n");
             return;
         }
