@@ -1,14 +1,10 @@
 #ifndef BIBLIOTECA_H
 #define BIBLIOTECA_H
 
-typedef struct {
-    char nome[100];
-    int idade;
-    char cpf[12];
-} Paciente;
+#include "structs.h"
 
 typedef struct Elista {
-    Paciente dados;
+    Registro dados;
     struct Elista *proximo;
 } Elista;
 
