@@ -4,5 +4,6 @@ project(Projeto_SUS C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(Projeto_SUS main.c
-        biblioteca.c
-        biblioteca.h)
+        cadastrar.c
+        cadastrar.h
+        structs.h)
