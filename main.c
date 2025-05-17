@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include "biblioteca.h"
+#include "cadastrar.h"
 
 int main() {
     Lista lista;
-    inicializar_lista(&lista);
 
     int opcao;
 
@@ -26,6 +25,7 @@ int main() {
 
         switch(opcao) {
             case 1: {
+                inicializar_lista(&lista);
                 int cadastro;
                 do {
                     printf("\nMenu Cadastro:\n");
