@@ -5,8 +5,27 @@
 
 // Inicializa a lista dinâmica
 void inicializar_lista(Lista *lista) {
+    FILE *arq = fopen("registros.bin", "rb");
+
     lista->inicio = NULL;
     lista->qtde = 0;
+
+    Registro atual;
+
+    while (fread(&atual, sizeof(Registro), 1, arq) == 1) {
+        Elista *novo = (Elista *)malloc(sizeof(Elista));
+        strcpy(novo->dados.nome, atual.nome);
+        novo->dados.idade = atual.idade;
+        strcpy(novo->dados.cpf, atual.cpf);
+        novo->dados.entrada.dia = atual.entrada.dia;
+        novo->dados.entrada.mes = atual.entrada.mes;
+        novo->dados.entrada.ano = atual.entrada.ano;
+
+        novo->proximo = lista->inicio;
+        lista->inicio = novo;
+        lista->qtde++;
+    }
+    fclose(arq);
 }
 
 // Função para cadastrar um novo paciente no início da lista
@@ -17,6 +36,8 @@ void cadastrar_paciente(Lista *lista) {
         return;
     }
 
+    FILE *arq = fopen("registros.bin", "ab");
+
     // Entrada dos dados do paciente
     printf("Digite o nome do paciente: ");
     scanf(" %[^\n]", novo->dados.nome);
@@ -24,12 +45,15 @@ void cadastrar_paciente(Lista *lista) {
     scanf("%d", &novo->dados.idade);
     printf("Digite o CPF do paciente: ");
     scanf(" %[^\n]", novo->dados.cpf);
-    printf("Digite o dia da entrada: ");
+    printf("Digite o dia da entrada: ");        //TODO melhorar o sistema de inserir a data
     scanf(" %d", &novo->dados.entrada.dia);
     printf("Digite o mes da entrada: ");
     scanf(" %d", &novo->dados.entrada.mes);
     printf("Digite o ano da entrada: ");
     scanf(" %d", &novo->dados.entrada.ano);
+
+    fwrite(&novo->dados, sizeof(Registro), 1, arq);
+    fclose(arq);
 
     // Inserção no início da lista
     novo->proximo = lista->inicio;
