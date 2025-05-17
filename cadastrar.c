@@ -171,12 +171,33 @@ void remover_paciente(Lista *lista) {
             free(atual);
             lista->qtde--;
             printf("Paciente removido com sucesso!\n");
-            return;
         }
 
         anterior = atual;
         atual = atual->proximo;
     }
 
-    printf("Paciente nao encontrado!\n");
+
+    // Remover no arquivo
+    FILE *arq = fopen("registros.bin", "rb");
+    FILE *temp = fopen("temp.bin", "wb");
+
+    Registro reg;
+    int achou = 0;
+
+    while (fread(&reg, sizeof(Registro), 1, arq) == 1) {
+        if (strcmp(reg.cpf, cpf) == 0) {
+            achou = 1;
+        } else {
+            fwrite(&reg, sizeof(Registro), 1, temp);
+        }
+    }
+    fclose(arq);
+    fclose(temp);
+    if (achou == 1) {
+        remove("registros.bin");
+        rename("temp.bin", "registros.bin");
+    } else {
+        printf("Paciente nao encontrado!\n");
+    }
 }
