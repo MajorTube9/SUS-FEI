@@ -122,29 +122,60 @@ void atualizar_paciente(Lista *lista) {
     scanf(" %[^\n]", cpf);
 
     Elista *atual = lista->inicio;
+    int encontrado = 0;
+
+    // Busca na lista
     while (atual != NULL) {
         if (strcmp(atual->dados.cpf, cpf) == 0) {
-            printf("\nPaciente encontrado. Atualize os dados:\n");
-            printf("Digite o novo nome: ");
-            scanf(" %[^\n]", atual->dados.nome);
-            printf("Digite a nova idade: ");
-            scanf("%d", &atual->dados.idade);
-            printf("Digite o novo CPF: ");
-            scanf(" %[^\n]", atual->dados.cpf);
-            printf("Digite o novo dia da entrada: ");
-            scanf(" %d", &atual->dados.entrada.dia);
-            printf("Digite o novo mes da entrada: ");
-            scanf(" %d", &atual->dados.entrada.mes);
-            printf("Digite o novo ano da entrada: ");
-            scanf(" %d", &atual->dados.entrada.ano);
-
-            printf("Dados do paciente atualizados com sucesso!\n");
-            return;
+            encontrado = 1;
+            break;
         }
         atual = atual->proximo;
     }
 
-    printf("Paciente nao encontrado!\n");
+    if (encontrado == 0) {
+        printf("Paciente nao encontrado!\n");
+        return;
+    }
+
+    printf("\nPaciente encontrado. Atualize os dados:\n");
+    printf("Digite o novo nome: ");
+    scanf(" %[^\n]", atual->dados.nome);
+    printf("Digite a nova idade: ");
+    scanf("%d", &atual->dados.idade);
+    printf("Digite o novo CPF: ");
+    scanf(" %[^\n]", atual->dados.cpf);
+    printf("Digite o novo dia da entrada: ");
+    scanf(" %d", &atual->dados.entrada.dia);
+    printf("Digite o novo mes da entrada: ");
+    scanf(" %d", &atual->dados.entrada.mes);
+    printf("Digite o novo ano da entrada: ");
+    scanf(" %d", &atual->dados.entrada.ano);
+
+    // Atualiza no arquivo
+    FILE *arq = fopen("registros.bin", "r+b");
+
+    Registro reg;
+    long posicao = 0;
+    int atualizado = 0;
+
+    while (fread(&reg, sizeof(Registro), 1, arq) == 1) {
+        if (strcmp(reg.cpf, cpf) == 0) {
+            // Volta para a posição correta para sobrescrever
+            fseek(arq, posicao, SEEK_SET);
+            // Escreve os dados atualizados
+            fwrite(&(atual->dados), sizeof(Registro), 1, arq);
+            atualizado = 1;
+            break;
+        }
+        posicao = ftell(arq); // Atualiza a posição atual
+    }
+
+    fclose(arq);
+
+    if (atualizado) {
+        printf("\nDados do paciente atualizados com sucesso!\n");
+    }
 }
 
 // Função para remover um paciente
