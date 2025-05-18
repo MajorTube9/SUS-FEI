@@ -1,10 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "cadastrar.h"
 #include "atendimento.h"
+#include "atendPrior.h"
 
+// TODO Arrumar o sistema de datas (deixar mais bonito e limitar a 31 dias e 12 meses)
+// TODO Deixar a apresentação mais bonita
+// TODO Transferir TODAS (talvez) as structs para o structs.h
 int main() {
     Lista lista;
     Fila fila;
+    inicializar_fila(&fila);
+    Fila filaPrior;
+    inicializar_fila(&filaPrior);
+    Heap *heap = malloc (sizeof(Heap));
+    heap->qtde = 0;
 
     int opcao;
 
@@ -71,7 +82,6 @@ int main() {
                 break;
             }
             case 2: {
-                inicializar_fila(&fila);
                 int atendimento;
                 do {
                     printf("\nMenu Atendimento:\n");
@@ -92,6 +102,9 @@ int main() {
                         case 1:
                             enfileirar(&fila, &lista);
                             break;
+                        case 2:
+                            desenfileirar(&fila);
+                            break;
                         case 3:
                             mostrar_fila(&fila);
                             break;
@@ -102,6 +115,42 @@ int main() {
                             printf("Opcao invalida! Tente novamente.\n");
                     }
                 } while (atendimento != 4);
+                break;
+            }
+            case 3: {
+                int atendPrior;
+                do {
+                    printf("\nMenu Atendimento Prioritario:\n");
+                    printf("1. Enfileirar Paciente\n");
+                    printf("2. Desenfileirar Paciente\n");
+                    printf("3. Mostrar fila prioritaria completa\n");
+                    printf("4. Voltar\n");
+
+                    printf("Escolha uma opcao: ");
+
+                    if (scanf("%d", &atendPrior) != 1) {
+                        printf("Entrada invalida! Por favor, digite um número.\n");
+                        while (getchar() != '\n');
+                        continue;
+                    }
+
+                    switch (atendPrior) {
+                        case 1:
+                            enfileirar_prior(&filaPrior, &lista, heap);
+                            break;
+                        case 2:
+                            desenfileirar(&fila);
+                            break;
+                        case 3:
+                            mostrar_fila(&filaPrior);
+                            break;
+                        case 4:
+                            printf("Voltando ao menu principal...\n");
+                            break;
+                        default:
+                            printf("Opcao invalida! Tente novamente.\n");
+                    }
+                } while (atendPrior != 4);
                 break;
             }
             case 6:
