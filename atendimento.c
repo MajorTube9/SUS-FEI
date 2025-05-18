@@ -58,9 +58,29 @@ void enfileirar(Fila *fila, Lista *lista) {
     printf("Paciente nao cadastrado!\n");
 }
 
+// Desenfileirar o primeiro da fila
+void desenfileirar(Fila *fila) {
+    if (fila->qtde == 0) {
+        printf("Fila vazia!\n");
+        return;
+    }
+
+    Efila *liberar = fila->head;
+    if (fila->qtde == 1) {
+        fila->head = NULL;
+        fila->tail = NULL;
+    } else {
+        fila->head->proximo->anterior = NULL;
+        fila->head = fila->head->proximo;
+    }
+    fila->qtde--;
+    printf("Paciente %s desenfileirado!\n", liberar->dados.nome);
+    free(liberar);
+}
+
 void mostrar_fila(Fila *fila) {
     Efila *atual = fila->head;
-    printf("fila:\n");
+    printf("Fila atual:\n");
     while (atual != NULL) {
         printf("Nome: %s, Idade: %d, CPF: %s, ", atual->dados.nome, atual->dados.idade, atual->dados.cpf);
         printf("Entrada: %d/%d/%d\n", atual->dados.entrada.dia,
