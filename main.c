@@ -8,6 +8,8 @@
 // TODO Arrumar o sistema de datas (deixar mais bonito e limitar a 31 dias e 12 meses)
 // TODO Deixar a apresentação mais bonita
 // TODO Transferir TODAS (talvez) as structs para o structs.h
+// TODO Resolver o sistema de salvar (salvar também as filas)
+
 int main() {
     Lista lista;
     Fila fila;
@@ -139,7 +141,7 @@ int main() {
                             enfileirar_prior(&filaPrior, &lista, heap);
                             break;
                         case 2:
-                            desenfileirar(&fila);
+                            desenfileirar(&filaPrior);
                             break;
                         case 3:
                             mostrar_fila(&filaPrior);
