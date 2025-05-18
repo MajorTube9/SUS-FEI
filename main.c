@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include "cadastrar.h"
+#include "atendimento.h"
 
 int main() {
     Lista lista;
+    Fila fila;
 
     int opcao;
 
@@ -66,6 +68,40 @@ int main() {
                             printf("Opcao invalida! Tente novamente.\n");
                     }
                 } while (cadastro != 6);
+                break;
+            }
+            case 2: {
+                inicializar_fila(&fila);
+                int atendimento;
+                do {
+                    printf("\nMenu Atendimento:\n");
+                    printf("1. Enfileirar Paciente\n");
+                    printf("2. Desenfileirar Paciente\n");
+                    printf("3. Mostrar fila completa\n");
+                    printf("4. Voltar\n");
+
+                    printf("Escolha uma opcao: ");
+
+                    if (scanf("%d", &atendimento) != 1) {
+                        printf("Entrada invalida! Por favor, digite um número.\n");
+                        while (getchar() != '\n');
+                        continue;
+                    }
+
+                    switch (atendimento) {
+                        case 1:
+                            enfileirar(&fila, &lista);
+                            break;
+                        case 3:
+                            mostrar_fila(&fila);
+                            break;
+                        case 4:
+                            printf("Voltando ao menu principal...\n");
+                            break;
+                        default:
+                            printf("Opcao invalida! Tente novamente.\n");
+                    }
+                } while (atendimento != 4);
                 break;
             }
             case 6:
