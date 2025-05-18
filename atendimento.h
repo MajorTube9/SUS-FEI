@@ -2,6 +2,7 @@
 #define ATENDIMENTO_H
 
 #include "structs.h"
+#include "cadastrar.h"
 
 typedef struct Efila{
     Registro dados;
@@ -16,6 +17,7 @@ typedef struct {
 } Fila;
 
 void inicializar_fila();
-void enfileirar(Fila *fila);
+void enfileirar(Fila *fila, Lista *lista);
+void mostrar_fila(Fila *fila);
 
 #endif
