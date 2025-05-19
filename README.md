@@ -56,9 +56,6 @@ Mostrar registros ordenados por:
 - Código fonte completo e comentado
 - Arquivo de dados com 10 registros de pacientes para testes
 
-## 👥 Desenvolvimento
-Projeto desenvolvido individualmente ou em dupla (conforme especificação)
-
 ## 🎯 Objetivos Alcançados
 - Implementação robusta de múltiplas estruturas de dados
 - Sistema completo de gerenciamento de pacientes
