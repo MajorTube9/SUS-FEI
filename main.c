@@ -6,34 +6,36 @@
 #include "atendPrior.h"
 #include "pesquisa.h"
 #include "desfazer.h"
-
-// TODO Arrumar o sistema de datas (deixar mais bonito e limitar a 31 dias e 12 meses)
-// TODO Deixar a apresentação mais bonita
-// TODO Transferir TODAS (talvez) as structs para o structs.h
-// TODO Resolver o sistema de salvar (salvar também as filas)
-// TODO Comentar o código
+#include "structs.h"
 
 int main() {
+    // Iniciaçizando as variáveis, estruturas etc
     Lista lista;
+    inicializar_lista(&lista);
+
     Fila fila;
     inicializar_fila(&fila);
+
     Fila filaPrior;
     inicializar_fila(&filaPrior);
-    inicializar_lista(&lista);
+
     Heap *heap = malloc (sizeof(Heap));
     heap->qtde = 0;
+
     ABB *arvAno = cria_arvore();
     ABB *arvMes = cria_arvore();
     ABB *arvDia = cria_arvore();
     ABB *arvIdade = cria_arvore();
-    Elista *atual = lista.inicio;
+
     Pilha *pilha = inicializar_pilha();
 
     int opcao;
 
+    // MENU PRINCIPAL
     do {
         atualizar_arvores(arvAno, arvMes, arvDia, arvIdade, &lista);
-        printf("\nMenu:\n");
+        printf("----------------------------------------------------");
+        printf("\nMenu Principal:\n");
         printf("1. Cadastrar\n");
         printf("2. Atendimento\n");
         printf("3. Atendimento prioritario\n");
@@ -41,18 +43,22 @@ int main() {
         printf("5. Desfazer\n");
         printf("6. Sobre\n");
         printf("0. Sair\n");
+        printf("----------------------------------------------------\n");
         printf("Escolha uma opcao: ");
 
         if (scanf("%d", &opcao) != 1) {
-            printf("Entrada invalida! Por favor, digite um número.\n");
+            printf("Entrada invalida! Por favor, digite um numero.\n");
             while (getchar() != '\n');
             continue;
         }
 
         switch(opcao) {
+                // MENU CADASTRO
             case 1: {
                 int cadastro;
                 do {
+
+                    printf("----------------------------------------------------");
                     printf("\nMenu Cadastro:\n");
                     printf("1. Cadastrar novo paciente\n");
                     printf("2. Consultar paciente cadastrado\n");
@@ -60,10 +66,11 @@ int main() {
                     printf("4. Atualizar dados de paciente\n");
                     printf("5. Remover paciente\n");
                     printf("6. Voltar\n");
+                    printf("----------------------------------------------------\n");
                     printf("Escolha uma opcao: ");
 
                     if (scanf("%d", &cadastro) != 1) {
-                        printf("Entrada invalida! Por favor, digite um número.\n");
+                        printf("Entrada invalida! Por favor, digite um numero.\n");
                         while (getchar() != '\n');
                         continue;
                     }
@@ -93,14 +100,17 @@ int main() {
                 } while (cadastro != 6);
                 break;
             }
+                // MENU ATENDIMENTO
             case 2: {
                 int atendimento;
                 do {
+                    printf("----------------------------------------------------");
                     printf("\nMenu Atendimento:\n");
                     printf("1. Enfileirar Paciente\n");
                     printf("2. Desenfileirar Paciente\n");
                     printf("3. Mostrar fila completa\n");
                     printf("4. Voltar\n");
+                    printf("----------------------------------------------------\n");
 
                     printf("Escolha uma opcao: ");
 
@@ -130,14 +140,17 @@ int main() {
                 } while (atendimento != 4);
                 break;
             }
+                // MENU ATENDIMENTO PRIORITÁRIO
             case 3: {
                 int atendPrior;
                 do {
+                    printf("----------------------------------------------------");
                     printf("\nMenu Atendimento Prioritario:\n");
                     printf("1. Enfileirar Paciente\n");
                     printf("2. Desenfileirar Paciente\n");
                     printf("3. Mostrar fila prioritaria completa\n");
                     printf("4. Voltar\n");
+                    printf("----------------------------------------------------\n");
 
                     printf("Escolha uma opcao: ");
 
@@ -166,15 +179,18 @@ int main() {
                 } while (atendPrior != 4);
                 break;
             }
+                // MENU PESQUISA
             case 4: {
                 int pesquisa;
                 do {
+                    printf("----------------------------------------------------");
                     printf("\nMenu Pesquisa:\n");
                     printf("1. Mostrar Registros ordenados por Ano de Registro\n");
                     printf("2. Mostrar Registros ordenados por Mes de Registro\n");
                     printf("3. Mostrar Registros ordenados por Dia de Registro\n");
                     printf("4. Mostrar Registros ordenados por Idade de Registro\n");
                     printf("5. Voltar\n");
+                    printf("----------------------------------------------------\n");
                     printf("Escolha uma opcao: ");
 
                     if (scanf("%d", &pesquisa) != 1) {
@@ -206,13 +222,16 @@ int main() {
                 } while (pesquisa != 5);
                 break;
             }
+                // MENU DESFAZER
             case 5: {
                 int desfazer;
                 do {
+                    printf("----------------------------------------------------");
                     printf("\nMenu Desfazer:\n");
                     printf("1. Mostrar Operacoes da Fila de Atendimento\n");
                     printf("2. Desfazer Ultima Operacao da Fila de Atendimento\n");
                     printf("3. Voltar\n");
+                    printf("----------------------------------------------------\n");
                     printf("Escolha uma opcao: ");
 
                     if (scanf("%d", &desfazer) != 1) {
@@ -237,15 +256,19 @@ int main() {
                 } while (desfazer != 3);
                 break;
             }
+                // SOBRE
             case 6:
+                printf("----------------------------------------------------");
                 printf("Gabriel Machado Da Silva & Sergio de Siqueira Santos\n");
                 printf("RA: 22.123.005-5 / 22.124.082-3\n");
-                printf("Ciencia da Computacao\n");
-                printf("Estrutura de Dados\n");
-                printf("Feito em no mes de maio\n");
+                printf("Ciencia da Computacao da FEI\n");
+                printf("Estrutura de Dados, Professor Luciano Rossi\n");
+                printf("Feito em maio de 2025\n");
+                printf("----------------------------------------------------\n");
                 break;
             case 0:
-                printf("Saindo...\n");
+                // SAIR
+                printf("Saindo...\n"); // TODO dar um delay antes de sair
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
