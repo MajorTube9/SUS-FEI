@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "cadastrar.h"
+#include "desfazer.h"
 
 // Inicializa a fila dinâmica
 void inicializar_fila(Fila *fila) {
@@ -14,7 +15,7 @@ void inicializar_fila(Fila *fila) {
 }
 
 // Enfileirar um paciente na fila
-void enfileirar(Fila *fila, Lista *lista) {
+void enfileirar(Fila *fila, Lista *lista, Pilha *pilha) {
     if (lista->inicio == NULL) {
         printf("A lista está vazia!\n");
         return;
@@ -53,13 +54,16 @@ void enfileirar(Fila *fila, Lista *lista) {
         }
         fila->tail = novo;
         fila->qtde++;
+
+        push(pilha, novo->dados, 1);
+
         return;
     }
     printf("Paciente nao cadastrado!\n");
 }
 
 // Desenfileirar o primeiro da fila
-void desenfileirar(Fila *fila) {
+void desenfileirar(Fila *fila, Pilha *pilha) {
     if (fila->qtde == 0) {
         printf("Fila vazia!\n");
         return;
@@ -74,6 +78,7 @@ void desenfileirar(Fila *fila) {
         fila->head = fila->head->proximo;
     }
     fila->qtde--;
+    push(pilha, liberar->dados, 2);
     printf("Paciente %s desenfileirado!\n", liberar->dados.nome);
     free(liberar);
 }
