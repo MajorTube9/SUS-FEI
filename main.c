@@ -4,11 +4,13 @@
 #include "cadastrar.h"
 #include "atendimento.h"
 #include "atendPrior.h"
+#include "pesquisa.h"
 
 // TODO Arrumar o sistema de datas (deixar mais bonito e limitar a 31 dias e 12 meses)
 // TODO Deixar a apresentação mais bonita
 // TODO Transferir TODAS (talvez) as structs para o structs.h
 // TODO Resolver o sistema de salvar (salvar também as filas)
+// TODO Comentar o código
 
 int main() {
     Lista lista;
@@ -16,12 +18,19 @@ int main() {
     inicializar_fila(&fila);
     Fila filaPrior;
     inicializar_fila(&filaPrior);
+    inicializar_lista(&lista);
     Heap *heap = malloc (sizeof(Heap));
     heap->qtde = 0;
+    ABB *arvAno = cria_arvore();
+    ABB *arvMes = cria_arvore();
+    ABB *arvDia = cria_arvore();
+    ABB *arvIdade = cria_arvore();
+    Elista *atual = lista.inicio;
 
     int opcao;
 
     do {
+        atualizar_arvores(arvAno, arvMes, arvDia, arvIdade, &lista);
         printf("\nMenu:\n");
         printf("1. Cadastrar\n");
         printf("2. Atendimento\n");
@@ -40,7 +49,6 @@ int main() {
 
         switch(opcao) {
             case 1: {
-                inicializar_lista(&lista);
                 int cadastro;
                 do {
                     printf("\nMenu Cadastro:\n");
@@ -153,6 +161,46 @@ int main() {
                             printf("Opcao invalida! Tente novamente.\n");
                     }
                 } while (atendPrior != 4);
+                break;
+            }
+            case 4: {
+                int pesquisa;
+                do {
+                    printf("\nMenu Pesquisa:\n");
+                    printf("1. Mostrar Registros ordenados por Ano de Registro\n");
+                    printf("2. Mostrar Registros ordenados por Mes de Registro\n");
+                    printf("3. Mostrar Registros ordenados por Dia de Registro\n");
+                    printf("4. Mostrar Registros ordenados por Idade de Registro\n");
+                    printf("5. Voltar\n");
+                    printf("Escolha uma opcao: ");
+
+                    if (scanf("%d", &pesquisa) != 1) {
+                        printf("Entrada invalida! Por favor, digite um número.\n");
+                        while (getchar() != '\n');
+                        continue;
+                    }
+
+                    switch (pesquisa) {
+                        case 1:
+                            mostrar(arvAno->raiz);
+                            break;
+                        case 2:
+                            mostrar(arvMes->raiz);
+                            break;
+                        case 3:
+                            mostrar(arvDia->raiz);
+                            break;
+                        case 4:
+                            mostrar(arvIdade->raiz);
+                            break;
+
+                        case 5:
+                            printf("Voltando ao menu principal...\n");
+                            break;
+                        default:
+                            printf("Opcao invalida! Tente novamente.\n");
+                    }
+                } while (pesquisa != 5);
                 break;
             }
             case 6:
