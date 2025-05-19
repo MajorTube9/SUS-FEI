@@ -98,7 +98,7 @@ void consultar_paciente(Lista *lista) {
             printf("Nome: %s\n", atual->dados.nome);
             printf("Idade: %d\n", atual->dados.idade);
             printf("CPF: %s\n", atual->dados.cpf);
-            printf("Entrada: %d/%d/%d", atual->dados.entrada.dia,
+            printf("Entrada: %d/%d/%d\n", atual->dados.entrada.dia,
                                             atual->dados.entrada.mes,
                                             atual->dados.entrada.ano);
             return;
