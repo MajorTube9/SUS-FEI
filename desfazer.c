@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 #include "desfazer.h"
-#include "atendimento.h"
+#include "structs.h"
 
+// Inicializa o elemento da pilha
 EPilha *inicializar_epilha(Registro reg, int operacao) {
     EPilha *novo = malloc(sizeof(EPilha));
     novo->anterior = NULL;
@@ -20,6 +21,7 @@ Pilha *inicializar_pilha() {
     return pilha;
 }
 
+// Coloca o registro na pilha
 // operacao: 1 = enfileirou, 2 = desenfileirou
 void push(Pilha *pilha, Registro reg, int operacao) {
     EPilha *novo = inicializar_epilha(reg, operacao);
@@ -31,6 +33,7 @@ void push(Pilha *pilha, Registro reg, int operacao) {
     pilha->qtde++;
 }
 
+// Desfaz o enfileiramento ou o desenfileiramento
 // retorna 0 se foi e 1 se nao
 int desfazerr(Pilha *pilha, Fila *fila) {
     int escolha;
@@ -97,6 +100,7 @@ int desfazerr(Pilha *pilha, Fila *fila) {
     }
 }
 
+// Mostra o log atual
 void mostrar_pilha(Pilha *pilha) {
     EPilha *atual = pilha->topo;
     printf("Acao mais antiga:\n");
