@@ -5,6 +5,7 @@
 #include "atendimento.h"
 #include "atendPrior.h"
 #include "pesquisa.h"
+#include "desfazer.h"
 
 // TODO Arrumar o sistema de datas (deixar mais bonito e limitar a 31 dias e 12 meses)
 // TODO Deixar a apresentação mais bonita
@@ -26,6 +27,7 @@ int main() {
     ABB *arvDia = cria_arvore();
     ABB *arvIdade = cria_arvore();
     Elista *atual = lista.inicio;
+    Pilha *pilha = inicializar_pilha();
 
     int opcao;
 
@@ -110,10 +112,11 @@ int main() {
 
                     switch (atendimento) {
                         case 1:
-                            enfileirar(&fila, &lista);
+                            enfileirar(&fila, &lista, pilha);
+
                             break;
                         case 2:
-                            desenfileirar(&fila);
+                            desenfileirar(&fila, pilha);
                             break;
                         case 3:
                             mostrar_fila(&fila);
@@ -149,7 +152,7 @@ int main() {
                             enfileirar_prior(&filaPrior, &lista, heap);
                             break;
                         case 2:
-                            desenfileirar(&filaPrior);
+                            desenfileirar_prior(&filaPrior);
                             break;
                         case 3:
                             mostrar_fila(&filaPrior);
@@ -201,6 +204,37 @@ int main() {
                             printf("Opcao invalida! Tente novamente.\n");
                     }
                 } while (pesquisa != 5);
+                break;
+            }
+            case 5: {
+                int desfazer;
+                do {
+                    printf("\nMenu Desfazer:\n");
+                    printf("1. Mostrar Operacoes da Fila de Atendimento\n");
+                    printf("2. Desfazer Ultima Operacao da Fila de Atendimento\n");
+                    printf("3. Voltar\n");
+                    printf("Escolha uma opcao: ");
+
+                    if (scanf("%d", &desfazer) != 1) {
+                        printf("Entrada invalida! Por favor, digite um número.\n");
+                        while (getchar() != '\n');
+                        continue;
+                    }
+
+                    switch (desfazer) {
+                        case 1:
+                            mostrar_pilha(pilha);
+                            break;
+                        case 2:
+                            desfazerr(pilha, &fila);
+                            break;
+                        case 3:
+                            printf("Voltando ao menu principal...\n");
+                            break;
+                        default:
+                            printf("Opcao invalida! Tente novamente.\n");
+                    }
+                } while (desfazer != 3);
                 break;
             }
             case 6:
