@@ -1,4 +1,4 @@
-# SUS-do-tio-LULU 📋
+# SUS-FEI 📋
 
 Um sistema completo de gerenciamento de atendimento médico implementado em C, utilizando diversas estruturas de dados para organizar eficientemente o fluxo de pacientes.
 
