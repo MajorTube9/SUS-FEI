@@ -3,8 +3,9 @@
 #include <string.h>
 
 #include "atendPrior.h"
-#include "atendimento.h"
+#include "structs.h"
 
+// Funções pro heap funcionar
 int filho_esq(int pai) {
     return 2 * pai + 1;
 }
@@ -67,9 +68,10 @@ void remover(Heap *h) {
     peneirar(h, 0);
 }
 
+// Coloca na fila com base na idade ao inves de por ordem de chegada
 void enfileirar_prior(Fila *fila, Lista *lista, Heap *heap) {
     if (lista->inicio == NULL) {
-        printf("A lista está vazia!\n");
+        printf("A lista esta vazia!\n");
         return;
     }
 
@@ -88,20 +90,18 @@ void enfileirar_prior(Fila *fila, Lista *lista, Heap *heap) {
                                          atual_lista->dados.entrada.mes,
                                          atual_lista->dados.entrada.ano);
 
-            // Limpa a heap atual
+            // Limpa o heap
             heap->qtde = 0;
 
-            // Insere todos os pacientes da fila na heap
+            // Insere todos os pacientes da fila no heap
             Efila *atual_fila = fila->head;
             while (atual_fila != NULL) {
                 inserir(heap, atual_fila->dados);  // Adiciona à heap
                 atual_fila = atual_fila->proximo;
             }
 
-            // Insere o novo paciente na heap
             inserir(heap, atual_lista->dados);
 
-            // Limpa a fila atual
             while (fila->head != NULL) {
                 Efila *temp = fila->head;
                 fila->head = fila->head->proximo;
@@ -110,7 +110,7 @@ void enfileirar_prior(Fila *fila, Lista *lista, Heap *heap) {
             fila->qtde = 0;
             fila->tail = NULL;
 
-            // Reconstrói a fila a partir da heap
+            // Reconstrói a fila
             while (heap->qtde > 0) {
                 Efila *novo = (Efila*) malloc(sizeof(Efila));
                 novo->dados = heap->dados[0];  // Pega o de maior prioridade (idade)
@@ -125,7 +125,7 @@ void enfileirar_prior(Fila *fila, Lista *lista, Heap *heap) {
                 fila->tail = novo;
                 fila->qtde++;
 
-                // Remove o elemento da heap após inserir na fila
+                // Remove o elemento da heap depois de inserir na fila
                 remover(heap);
             }
 
@@ -135,10 +135,11 @@ void enfileirar_prior(Fila *fila, Lista *lista, Heap *heap) {
         atual_lista = atual_lista->proximo;
     }
 
-    printf("Paciente não cadastrado!\n");
+    printf("Paciente nao cadastrado!\n");
 }
 
 // Desenfileirar o primeiro da fila
+// Separado do atendimento pq usa outro parametro
 void desenfileirar_prior(Fila *fila) {
     if (fila->qtde == 0) {
         printf("Fila vazia!\n");
