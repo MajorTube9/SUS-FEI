@@ -202,16 +202,24 @@ int main() {
 
                     switch (pesquisa) {
                         case 1:
+                            printf("Menor\n");
                             mostrar(arvAno->raiz);
+                            printf("Maior\n");
                             break;
                         case 2:
+                            printf("Menor\n");
                             mostrar(arvMes->raiz);
+                            printf("Maior\n");
                             break;
                         case 3:
+                            printf("Menor\n");
                             mostrar(arvDia->raiz);
+                            printf("Maior\n");
                             break;
                         case 4:
+                            printf("Menor\n");
                             mostrar(arvIdade->raiz);
+                            printf("Maior\n");
                             break;
 
                         case 5:
@@ -259,7 +267,7 @@ int main() {
             }
                 // SOBRE
             case 6:
-                printf("----------------------------------------------------");
+                printf("----------------------------------------------------\n");
                 printf("Gabriel Machado Da Silva & Sergio de Siqueira Santos\n");
                 printf("RA: 22.123.005-5 / 22.124.082-3\n");
                 printf("Ciencia da Computacao da FEI\n");
