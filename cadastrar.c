@@ -1,7 +1,9 @@
-#include "cadastrar.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "cadastrar.h"
+#include "structs.h"
 
 // Inicializa a lista dinâmica
 void inicializar_lista(Lista *lista) {
@@ -45,14 +47,28 @@ void cadastrar_paciente(Lista *lista) {
     scanf("%d", &novo->dados.idade);
     printf("Digite o CPF do paciente: ");
     scanf(" %[^\n]", novo->dados.cpf);
-    printf("Digite o dia da entrada: ");        //TODO melhorar o sistema de inserir a data
-    scanf(" %d", &novo->dados.entrada.dia);
-    printf("Digite o mes da entrada: ");
-    scanf(" %d", &novo->dados.entrada.mes);
+    while (1) { // Garantir que a data e valida
+        printf("Digite o dia da entrada: ");
+        scanf(" %d", &novo->dados.entrada.dia);
+        if (novo->dados.entrada.dia < 1 || novo->dados.entrada.dia > 31) {
+            printf("Dia invalido!!\n");
+        } else {
+            break;
+        }
+    }
+    while (1) {
+        printf("Digite o mes da entrada: ");
+        scanf(" %d", &novo->dados.entrada.mes);
+        if (novo->dados.entrada.mes < 1 || novo->dados.entrada.mes > 12) {
+            printf("Mes invalido!!\n");
+        } else {
+            break;
+        }
+    }
     printf("Digite o ano da entrada: ");
     scanf(" %d", &novo->dados.entrada.ano);
 
-    fwrite(&novo->dados, sizeof(Registro), 1, arq);
+    fwrite(&novo->dados, sizeof(Registro), 1, arq); // Guarda no arquivo
     fclose(arq);
 
     // Inserção no início da lista
@@ -64,6 +80,7 @@ void cadastrar_paciente(Lista *lista) {
 }
 
 // Função para consultar paciente pelo CPF
+// Olha na lista, nao no arquivo
 void consultar_paciente(Lista *lista) {
     if (lista->inicio == NULL) {
         printf("A lista está vazia!\n");
@@ -89,13 +106,13 @@ void consultar_paciente(Lista *lista) {
         atual = atual->proximo;
     }
 
-    printf("Paciente não encontrado!\n");
+    printf("Paciente nao encontrado!\n");
 }
 
 // Função para listar todos os pacientes
 void listar_pacientes(Lista *lista) {
     if (lista->inicio == NULL) {
-        printf("A lista está vazia!\n");
+        printf("A lista esta vazia!\n");
         return;
     }
 
@@ -152,8 +169,7 @@ void atualizar_paciente(Lista *lista) {
     printf("Digite o novo ano da entrada: ");
     scanf(" %d", &atual->dados.entrada.ano);
 
-    // Atualiza no arquivo
-    FILE *arq = fopen("registros.bin", "r+b");
+    FILE *arq = fopen("registros.bin", "r+b"); // Atualiza no arquivo
 
     Registro reg;
     long posicao = 0;
@@ -161,9 +177,7 @@ void atualizar_paciente(Lista *lista) {
 
     while (fread(&reg, sizeof(Registro), 1, arq) == 1) {
         if (strcmp(reg.cpf, cpf) == 0) {
-            // Volta para a posição correta para sobrescrever
             fseek(arq, posicao, SEEK_SET);
-            // Escreve os dados atualizados
             fwrite(&(atual->dados), sizeof(Registro), 1, arq);
             atualizado = 1;
             break;
@@ -194,7 +208,7 @@ void remover_paciente(Lista *lista) {
 
     while (atual != NULL) {
         if (strcmp(atual->dados.cpf, cpf) == 0) {
-            if (anterior == NULL) { // Remoção do primeiro elemento
+            if (anterior == NULL) { // Remove o primeiro elemento
                 lista->inicio = atual->proximo;
             } else {
                 anterior->proximo = atual->proximo;
