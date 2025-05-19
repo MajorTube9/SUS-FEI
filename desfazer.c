@@ -37,7 +37,7 @@ void push(Pilha *pilha, Registro reg, int operacao) {
 // retorna 0 se foi e 1 se nao
 int desfazerr(Pilha *pilha, Fila *fila) {
     int escolha;
-    printf("Acao mais recente:");
+    printf("Acao mais recente: ");
     if (pilha->topo->operacao == 1) {
         printf("Enfileirou paciente %s, CPF: %s\n", pilha->topo->dados.nome, pilha->topo->dados.cpf);
     } else {
