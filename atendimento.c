@@ -33,7 +33,7 @@ void enfileirar(Fila *fila, Lista *lista, Pilha *pilha) {
             printf("Nome: %s\n", atual->dados.nome);
             printf("Idade: %d\n", atual->dados.idade);
             printf("CPF: %s\n", atual->dados.cpf);
-            printf("Entrada: %d/%d/%d", atual->dados.entrada.dia,
+            printf("Entrada: %d/%d/%d\n", atual->dados.entrada.dia,
                                             atual->dados.entrada.mes,
                                             atual->dados.entrada.ano);
             novo->dados = atual->dados;
@@ -83,6 +83,7 @@ void desenfileirar(Fila *fila, Pilha *pilha) {
 void mostrar_fila(Fila *fila) {
     Efila *atual = fila->head;
     printf("Fila atual:\n");
+    printf("Primeiro da fila:\n");
     while (atual != NULL) {
         printf("Nome: %s, Idade: %d, CPF: %s, ", atual->dados.nome, atual->dados.idade, atual->dados.cpf);
         printf("Entrada: %d/%d/%d\n", atual->dados.entrada.dia,
@@ -90,5 +91,5 @@ void mostrar_fila(Fila *fila) {
                                             atual->dados.entrada.ano);
         atual = atual->proximo;
     }
-    printf("\n");
+    printf("Ultimo da fila\n");
 }
