@@ -2,12 +2,6 @@
 #define ATENDPRIOR_H
 
 #include "structs.h"
-#include "cadastrar.h"
-
-typedef struct {
-    Registro dados[20];
-    int qtde;
-} Heap;
 
 int filho_esq(int pai);
 int filho_dir(int pai);
