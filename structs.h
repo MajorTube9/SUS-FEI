@@ -17,4 +17,28 @@ typedef struct {
     Data entrada;
 } Registro;
 
+typedef struct EPilha {
+    struct Epilha *anterior;
+    struct Epilha *proximo;
+    Registro dados;
+    int operacao;
+} EPilha;
+
+typedef struct {
+    EPilha *topo;
+    int qtde;
+} Pilha;
+
+typedef struct Efila{
+    Registro dados;
+    struct Efila *proximo;
+    struct Efila *anterior;
+} Efila;
+
+typedef struct {
+    Efila *head;
+    Efila *tail;
+    int qtde;
+} Fila;
+
 #endif
