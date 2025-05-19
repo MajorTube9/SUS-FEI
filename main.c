@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "cadastrar.h"
 #include "atendimento.h"
@@ -268,7 +269,9 @@ int main() {
                 break;
             case 0:
                 // SAIR
-                printf("Saindo...\n"); // TODO dar um delay antes de sair
+                printf("Saindo...\n");
+                sleep(3);
+                exit(0);
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
