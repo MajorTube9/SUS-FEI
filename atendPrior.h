@@ -3,7 +3,6 @@
 
 #include "structs.h"
 #include "cadastrar.h"
-#include "atendimento.h"
 
 typedef struct {
     Registro dados[20];
