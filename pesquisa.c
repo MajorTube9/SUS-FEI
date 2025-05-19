@@ -13,6 +13,7 @@ ABB *cria_arvore() {
     return arvore;
 }
 
+// Cria elemetno da arvore
 EABB *cria_vertice(Registro reg) {
     EABB *novo = malloc(sizeof(EABB));
     novo->filhoDir = NULL;
@@ -23,6 +24,7 @@ EABB *cria_vertice(Registro reg) {
     return novo;
 }
 
+// Coloca um registro na arvore, posicao depende do tipo da arvore
 // operacao: 1 = ordem por ano, 2 = ordem por mes, 3 = ordem por dia, 4 = ordem por idade
 void inserir_vertice(ABB *arvore, Registro reg, int operacao) {
     EABB *novo = cria_vertice(reg);
@@ -30,7 +32,7 @@ void inserir_vertice(ABB *arvore, Registro reg, int operacao) {
     EABB *anterior = NULL;
     EABB *atual = arvore->raiz;
 
-    if (operacao == 1) {
+    if (operacao == 1) { // por ano
         while (atual != NULL) {
             anterior = atual;
             if (reg.entrada.ano <= anterior->dados.entrada.ano) {
@@ -49,7 +51,7 @@ void inserir_vertice(ABB *arvore, Registro reg, int operacao) {
         } else {
             arvore->raiz = novo;
         }
-    } else if (operacao == 2) {
+    } else if (operacao == 2) { // por mes
         while (atual != NULL) {
             anterior = atual;
             if (reg.entrada.mes <= anterior->dados.entrada.mes) {
@@ -68,7 +70,7 @@ void inserir_vertice(ABB *arvore, Registro reg, int operacao) {
         } else {
             arvore->raiz = novo;
         }
-    } else if (operacao == 3) {
+    } else if (operacao == 3) { // por dia
         while (atual != NULL) {
             anterior = atual;
             if (reg.entrada.dia <= anterior->dados.entrada.dia) {
@@ -87,7 +89,7 @@ void inserir_vertice(ABB *arvore, Registro reg, int operacao) {
         } else {
             arvore->raiz = novo;
         }
-    } else {
+    } else { // por idade
         while (atual != NULL) {
             anterior = atual;
             if (reg.idade <= anterior->dados.idade) {
@@ -111,6 +113,7 @@ void inserir_vertice(ABB *arvore, Registro reg, int operacao) {
     arvore->qtde++;
 }
 
+// Mostra qualquer arvore
 void mostrar(EABB *raiz) {
     if (raiz != NULL) {
         mostrar(raiz->filhoEsq);
@@ -122,6 +125,7 @@ void mostrar(EABB *raiz) {
     }
 }
 
+// Limpa uma arvore pro caso de reescrever
 void libera_arvore(EABB *raiz) {
     if (raiz != NULL) {
         libera_arvore(raiz->filhoEsq);
@@ -130,6 +134,7 @@ void libera_arvore(EABB *raiz) {
     }
 }
 
+// Atualiza todas as arvores pro caso de atualizar um dado
 void atualizar_arvores(ABB *arvAno, ABB *arvMes, ABB *arvDia, ABB *arvIdade, Lista *lista) {
     // Limpar as árvores existentes
     libera_arvore(arvAno->raiz);
