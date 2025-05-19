@@ -1,11 +1,10 @@
-#include "atendimento.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "cadastrar.h"
+#include "atendimento.h"
 #include "desfazer.h"
+#include "structs.h"
 
 // Inicializa a fila dinâmica
 void inicializar_fila(Fila *fila) {
@@ -37,15 +36,12 @@ void enfileirar(Fila *fila, Lista *lista, Pilha *pilha) {
             printf("Entrada: %d/%d/%d", atual->dados.entrada.dia,
                                             atual->dados.entrada.mes,
                                             atual->dados.entrada.ano);
-            strcpy(novo->dados.nome, atual->dados.nome);
-            novo->dados.idade = atual->dados.idade;
-            strcpy(novo->dados.cpf, atual->dados.cpf);
-            novo->dados.entrada = atual->dados.entrada;
+            novo->dados = atual->dados;
             achou = 1;
         }
         atual = atual->proximo;
     }
-    if (achou == 1) {
+    if (achou == 1) { // Se achou
         if (fila->qtde == 0) {
             fila->head = novo;
         } else {
@@ -59,7 +55,7 @@ void enfileirar(Fila *fila, Lista *lista, Pilha *pilha) {
 
         return;
     }
-    printf("Paciente nao cadastrado!\n");
+    printf("Paciente nao cadastrado!\n"); // Senao sai
 }
 
 // Desenfileirar o primeiro da fila
@@ -83,6 +79,7 @@ void desenfileirar(Fila *fila, Pilha *pilha) {
     free(liberar);
 }
 
+// Mostra a fila atual
 void mostrar_fila(Fila *fila) {
     Efila *atual = fila->head;
     printf("Fila atual:\n");
