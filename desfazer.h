@@ -3,8 +3,6 @@
 
 #include "structs.h"
 
-
-
 EPilha *inicializar_epilha(Registro reg, int operacao);
 Pilha *inicializar_pilha();
 void push(Pilha *pilha, Registro reg, int operacao);
